@@ -26,9 +26,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5a5&xu=(9^uv60z1z5832f3i2z0-d&d=7pmrimg(qus8pr0@w@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True").lower() in ("1", "true", "yes")
 
-ALLOWED_HOSTS = []
+DEFAULT_ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "stay-booking-backend.onrender.com",
+]
+EXTRA_ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv("ALLOWED_HOSTS", "").split(",")
+    if host.strip()
+]
+ALLOWED_HOSTS = list(dict.fromkeys(DEFAULT_ALLOWED_HOSTS + EXTRA_ALLOWED_HOSTS))
 
 
 # Application definition
@@ -130,6 +140,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #manually
 AUTH_USER_MODEL = "users.User"
@@ -157,12 +168,14 @@ SIMPLE_JWT = {
 
 #manually
 CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
+    "https://stay-booking-backend.onrender.com",
+]
 
 #manually
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-import os
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

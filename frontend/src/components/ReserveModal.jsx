@@ -25,7 +25,7 @@ export default function ReserveModal({ propertyId, pricePerNight, onClose, onSuc
       const data = err.response?.data
 
       if (!err.response) {
-        setError('Network error. Is the backend running at http://127.0.0.1:8000?')
+        setError('Network error. Please try again in a moment.')
         return
       }
 

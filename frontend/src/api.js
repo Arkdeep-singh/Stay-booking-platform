@@ -44,16 +44,17 @@
 
 import axios from 'axios'
 
-const BASE_URL = "https://stay-booking-backend.onrender.com"
+const BACKEND_URL = 'https://stay-booking-backend.onrender.com'
+const API_URL = `${BACKEND_URL}/api`
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
 })
 
 export const getImageUrl = (image) => {
   if (!image) return null
-  return image.startsWith('http') ? image : `${BASE_URL}${image}`
+  return image.startsWith('http') ? image : `${BACKEND_URL}${image}`
 }
 
 api.interceptors.request.use((config) => {

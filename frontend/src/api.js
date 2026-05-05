@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const BACKEND_URL = 'https://stay-booking-backend.onrender.com'
-const API_URL = import.meta.env.VITE_API_URL || '/api'
+const API_URL = `${BACKEND_URL}/api`
 
 const api = axios.create({
   baseURL: API_URL,
